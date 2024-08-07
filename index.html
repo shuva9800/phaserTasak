@@ -1,0 +1,46 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phaser Game</title>
+</head>
+<body>
+    <div id="game-container"></div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html> -->
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phaser Game</title>
+    <style>
+        #right-panel {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 200px;
+            height: 100%;
+            overflow-y: auto;
+            background: #f0f0f0;
+            border-left: 1px solid #ccc;
+            padding: 10px;
+        }
+        #start-button {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button id="start-button">Start Session</button>
+    <div id="right-panel">
+        <h3>Sessions</h3>
+        <ul id="session-list"></ul>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
+
