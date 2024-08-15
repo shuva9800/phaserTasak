@@ -1,46 +1,63 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phaser Game</title>
-</head>
-<body>
-    <div id="game-container"></div>
-    <script type="module" src="/src/main.js"></script>
-</body>
-</html> -->
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Phaser Game</title>
     <style>
-        #right-panel {
-            position: fixed;
-            right: 0;
-            top: 0;
-            width: 200px;
-            height: 100%;
-            overflow-y: auto;
-            background: #f0f0f0;
-            border-left: 1px solid #ccc;
-            padding: 10px;
+        body {
+            display: flex;
+            justify-content: space-between;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
         }
-        #start-button {
-            margin: 20px;
+        #game-container {
+            flex: 1;
+            background-color: #f0f0f0;
+        }
+        #right-panel {
+            width: 300px;
+            background-color: #e0e0e0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #start-session-button {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #timer-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        #session-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+        }
+        #session-list li {
+            background-color: #ffffff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <button id="start-button">Start Session</button>
+    <div id="game-container"></div>
     <div id="right-panel">
-        <h3>Sessions</h3>
+        <button id="start-session-button">Start Session</button>
+        <div id="timer-text">Time: 20</div>
         <ul id="session-list"></ul>
     </div>
-    <script type="module" src="/src/main.js"></script>
+
+   
+    <script type="module" src="src/main.js"></script>
 </body>
 </html>
+
 

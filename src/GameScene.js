@@ -5,42 +5,68 @@ class GameScene extends Phaser.Scene {
         super({ key: 'GameScene' });
         this.sessions = [];
         this.sessionId = 0;
+        this.currentTimer = 20;
+        this.isSessionActive = false;
     }
 
     preload() {
-        this.load.image('ball', 'assets/arrow-right.svg');
-        this.load.audio('clock', 'assets/music/melody.mp3.mp3');
+        this.load.image('ball', 'assets/images/ball.svg');
+        this.load.audio('clock', 'assets/music/clock.mp3.mp3');
     }
 
     create() {
+        this.cameras.main.setBackgroundColor('#87CEEB'); 
+
         this.ball = this.physics.add.sprite(400, 300, 'ball');
         this.ball.setCollideWorldBounds(true);
         this.ball.setBounce(1);
-        this.ball.setVelocity(Phaser.Math.Between(-200, 200), Phaser.Math.Between(-200, 200));
 
         this.clockSound = this.sound.add('clock');
-        this.input.on('pointerdown', this.handleStartSession, this);
+
+        this.ball.setVelocity(0, 0);
+
+        // Handle Start Session button click
+        const startButton = document.getElementById('start-session-button');
+        this.timerText = document.getElementById('timer-text');
+        startButton.addEventListener('click', this.handleStartSession.bind(this));
     }
 
     handleStartSession() {
-        const randomDuration = Phaser.Math.Between(30, 120);
-        const sessionId = `Session-${++this.sessionId}`;
+        if (this.isSessionActive) return;
+
+        this.isSessionActive = true;
+        this.currentTimer = 20;
+
+        const sessionId = `SessionID-${Date.now()}`;
         const startTime = new Date().toLocaleTimeString();
 
         this.clockSound.play({ loop: true });
+        this.timerText.innerText = `Time: ${this.currentTimer}`;
 
         const timer = this.time.addEvent({
-            delay: randomDuration * 1000,
+            delay: 1000,
             callback: () => {
-                this.clockSound.stop();
-                const endTime = new Date().toLocaleTimeString();
-                this.sessions.push({ sessionId, startTime, endTime });
-                this.updateSessionList();
-                this.ball.setVelocity(0);
-            }
+                this.currentTimer--;
+                this.timerText.innerText = `Time: ${this.currentTimer}`;
+
+                if (this.currentTimer === 0) {
+                    this.clockSound.stop();
+                    this.ball.setVelocity(0);
+                    const endTime = new Date().toLocaleTimeString();
+                    this.sessions.push({ sessionId, startTime, endTime });
+                    this.updateSessionList();
+                    this.isSessionActive = false;
+                }
+            },
+            repeat: 19 
         });
 
-        this.ball.setVelocity(Phaser.Math.Between(-200, 200), Phaser.Math.Between(-200, 200));
+       
+        const minSpeed = 400;
+        const maxSpeed = 500; 
+        const xSpeed = Phaser.Math.Between(minSpeed, maxSpeed) * Phaser.Math.RND.sign();
+        const ySpeed = Phaser.Math.Between(minSpeed, maxSpeed) * Phaser.Math.RND.sign();
+        this.ball.setVelocity(xSpeed, ySpeed);
     }
 
     updateSessionList() {
@@ -53,9 +79,7 @@ class GameScene extends Phaser.Scene {
         });
     }
 
-    update() {
-        // Update logic for the ball or other game elements if needed
-    }
+   
 }
 
 export default GameScene;
